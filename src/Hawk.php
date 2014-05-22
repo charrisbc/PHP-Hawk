@@ -58,7 +58,9 @@ class Hawk {
 	 * Generate the full Hawk header string
 	 * @param  string $key    The identifier key
 	 * @param  string $secret The shared secret
-	 * @param  array  $params The MAC data parameters
+	 * @param  string $method The HTTP request method
+	 * @param  string $url    The URL of the reqeust
+	 * @param  array  $appata Extra application data to be included in the request
 	 * @return string         The Hawk header string
 	 */
 	public static function generateHeader($key = '', $secret = '', $method = 'GET', $url = array(), $appData = array())
@@ -77,7 +79,6 @@ class Hawk {
 		$params['method'] = $method;
 		$params['ext'] = (count($appData) > 0) ? http_build_query($appData) : null;
 		$params['timestamp'] = (isset($params['timestamp'])) ? $params['timestamp'] : time();
-		die(var_dump($params));
 
 		// Generate the MAC address
 		$mac = self::generateMac($secret, $params);
